@@ -1,0 +1,213 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: url("{% static 'images/juice.jpg' %}");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: #333;
+            position: relative;
+            padding-top: 60px; /* Added padding for the navbar */
+        }
+
+        /* Home Link Styles */
+        .nav-links {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #fff;
+            background-color: #FF6F61;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .nav-links a:hover {
+            background-color: #E55B50;
+            transform: scale(1.05);
+        }
+
+        /* Container Styles */
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 700px;
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.85);
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 0.8s ease-in-out;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Image Styles */
+        .image-container {
+            width: 45%;
+            text-align: center;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Form Styles */
+        .form-container {
+            width: 45%;
+        }
+
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #FF6F61;
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: #FF6F61;
+            outline: none;
+        }
+
+        /* Message Styles */
+        .messages {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        /* Button Styles */
+        button {
+            width: 100%;
+            background-color: #FF6F61;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #E55B50;
+            transform: scale(1.05);
+        }
+
+        /* Footer Styles */
+        .footer {
+            text-align: center;
+            margin-top: 15px;
+            color: #555;
+            font-size: 14px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - MyCheff</title>
+</head>
+<body>
+
+    <!-- Home Link in Top Left Corner -->
+    <div class="nav-links">
+        <a href="{% url 'home' %}">Home</a>
+    </div>
+
+    <!-- Admin Login Container -->
+    <div class="container">
+        <div class="image-container">
+            <p>Welcome, Admin! Log in to manage recipes, oversee user feedback, and keep MyCheff running smoothly.</p>
+        </div>
+        <div class="form-container">
+            <h2>ADMIN LOGIN</h2>
+            <form method="POST" action="{% url 'admin_login' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+                {% if messages %}
+                    <div class="messages">
+                        {% for message in messages %}
+                            <div class="message {{ message.tags }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <button type="submit">Login</button>
+            </form>
+
+            <div class="footer">
+                <p>Need help? Contact <a href="mailto:support@mycheffapp.com">support@mycheffapp.com</a></p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
